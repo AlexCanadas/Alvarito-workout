@@ -1019,19 +1019,19 @@
             
             <div class="macro-summary">
                 <div class="macro-item">
-                    <h4>~1600</h4>
-                    <p>Calorías/día</p>
+                    <h4>~1550</h4>
+                    <p>kcal/día</p>
                 </div>
                 <div class="macro-item">
-                    <h4>~140g</h4>
+                    <h4>~125g</h4>
                     <p>Proteína</p>
                 </div>
                 <div class="macro-item">
-                    <h4>~130g</h4>
+                    <h4>~145g</h4>
                     <p>Carbohidratos</p>
                 </div>
                 <div class="macro-item">
-                    <h4>~55g</h4>
+                    <h4>~49g</h4>
                     <p>Grasas</p>
                 </div>
             </div>
@@ -1093,7 +1093,63 @@
     </div>
 
     <script>
-        // Datos de ejercicios de Álvaro
+        // ========== DATOS DE NUTRICIÓN ==========
+        const nutritionData = {
+            desayuno: {
+                title: "Desayuno",
+                kcal: 400,
+                protein: 30,
+                carbs: 40,
+                fat: 14,
+                options: [
+                    {name: "Tortilla de 2 huevos + pan integral", details: "2 huevos (120g) + 30g pan integral + 5g aceite oliva", kcal: 380, protein: 16, carbs: 18, fat: 22},
+                    {name: "Yogur griego 0% + avena + frutos secos", details: "Yogur 150g + avena 40g + almendras 15g", kcal: 410, protein: 18, carbs: 42, fat: 16},
+                    {name: "Batido proteico + plátano", details: "Whey 25g + plátano 100g + leche 250ml + PB 10g", kcal: 420, protein: 32, carbs: 45, fat: 14},
+                    {name: "Cottage cheese + tostada + pavo", details: "Queso 150g + pan 30g + pavo 80g", kcal: 390, protein: 36, carbs: 20, fat: 12}
+                ]
+            },
+            comida: {
+                title: "Comida Principal",
+                kcal: 550,
+                protein: 45,
+                carbs: 55,
+                fat: 16,
+                options: [
+                    {name: "Pechuga de pollo + arroz integral", details: "Pollo 150g + arroz seco 50g + aceite 8g + verduras", kcal: 560, protein: 38, carbs: 52, fat: 14},
+                    {name: "Pavo a la plancha + patata", details: "Pavo 150g + patata 200g + aceite 8g + ensalada", kcal: 540, protein: 35, carbs: 58, fat: 14},
+                    {name: "Atún en lata + garbanzos", details: "Atún 120g + garbanzos secos 50g + aceite 8g + tomate", kcal: 530, protein: 36, carbs: 48, fat: 16},
+                    {name: "Pasta integral + pollo", details: "Pasta 60g seca + pollo 130g + tomate + aceite 8g", kcal: 570, protein: 34, carbs: 62, fat: 14}
+                ]
+            },
+            pre: {
+                title: "Pre-Entreno",
+                kcal: 200,
+                protein: 15,
+                carbs: 25,
+                fat: 4,
+                options: [
+                    {name: "Plátano + yogur natural", details: "Plátano mediano (120g) + yogur 125g", kcal: 190, protein: 5, carbs: 32, fat: 3},
+                    {name: "Tostada integral + miel", details: "Pan integral 30g + miel 15g", kcal: 200, protein: 3, carbs: 38, fat: 2},
+                    {name: "Batido ligero", details: "Whey 20g + agua + plátano 80g", kcal: 180, protein: 18, carbs: 20, fat: 1},
+                    {name: "Pan + cottage cheese", details: "Pan integral 30g + queso 80g", kcal: 210, protein: 14, carbs: 18, fat: 8}
+                ]
+            },
+            cena: {
+                title: "Cena",
+                kcal: 400,
+                protein: 35,
+                carbs: 25,
+                fat: 15,
+                options: [
+                    {name: "Merluza + verduras + patata", details: "Pescado 180g + verduras 200g + aceite 8g + patata 100g", kcal: 410, protein: 32, carbs: 28, fat: 14},
+                    {name: "Tortilla francesa + ensalada", details: "2 huevos + claras 100g + aceite 8g + espinacas", kcal: 380, protein: 22, carbs: 6, fat: 24},
+                    {name: "Pavo + calabacín + queso", details: "Pavo 130g + calabacín 200g + cottage 80g + aceite 5g", kcal: 420, protein: 38, carbs: 10, fat: 20},
+                    {name: "Atún + tomate + aguacate", details: "Atún 120g + tomate 200g + aguacate 60g (1/2 pequeño)", kcal: 390, protein: 28, carbs: 16, fat: 22}
+                ]
+            }
+        };
+
+        // Datos de ejercicios de Álvaro - TODOS CON VIDEOS CORRECTOS Y REPS 8-15 (max para plancha)
         let workoutData = {
             day1: {
                 name: "Día 1",
@@ -1196,7 +1252,7 @@
                         sets: 3,
                         reps: "max",
                         tag: "Core",
-                        notes: "Cuerpo recto, abdomen duro y glúteos activos.",
+                        notes: "Cuerpo recto, abdomen duro y glúteos activos. Aguanta el máximo tiempo posible.",
                         video: "https://www.youtube.com/shorts/3AM7L2k7BEw"
                     }
                 ]
@@ -1309,150 +1365,10 @@
             }
         };
 
-
-        function renderNutrition() {
-    const container = document.getElementById('nutrition-grid');
-    let html = '';
-    
-    // PRIMERO: Mostrar Alimentos Base Recomendados (tarjeta especial)
-    const baseFoods = nutritionData.baseFoods;
-    html += `
-        <div class="meal-card" style="grid-column: 1 / -1; border: 2px solid var(--accent-primary); background: linear-gradient(135deg, rgba(0,212,255,0.05), rgba(112,0,255,0.05));">
-            <h3 class="meal-title" style="color: var(--accent-primary); display: flex; align-items: center; gap: 10px;">
-                <span>🥗</span> ${baseFoods.title}
-            </h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-    `;
-    
-    baseFoods.categories.forEach(cat => {
-        html += `
-            <div style="background: var(--bg-input); padding: 15px; border-radius: 12px; border-left: 3px solid var(--accent-secondary);">
-                <h4 style="margin: 0 0 10px 0; color: var(--accent-secondary); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">${cat.category}</h4>
-                <ul style="margin: 0; padding-left: 0; list-style: none;">
-        `;
-        
-        cat.items.forEach(item => {
-            html += `
-                <li style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
-                    <div style="font-weight: 600; font-size: 13px; margin-bottom: 2px;">${item.name}</div>
-                    <div style="font-size: 11px; color: var(--text-muted);">${item.serving}</div>
-                    <div style="font-size: 10px; color: var(--warning); margin-top: 2px; font-style: italic;">💡 ${item.tip}</div>
-                </li>
-            `;
-        });
-        
-        html += `
-                </ul>
-            </div>
-        `;
-    });
-    
-    html += `
-            </div>
-            <div style="margin-top: 15px; padding: 10px; background: rgba(0,212,255,0.1); border-radius: 8px; font-size: 12px; color: var(--text-secondary);">
-                <strong>Consejo:</strong> Combina 1 proteína + 1 carbohidrato + verduras en cada comida principal. Ajusta las cantidades según tu hambre y progreso en la báscula.
-            </div>
-        </div>
-    `;
-    
-    // DESPUÉS: Mostrar las comidas del día
-    Object.keys(nutritionData).forEach(key => {
-        if (key === 'baseFoods') return; // Saltar alimentos base, ya lo hicimos arriba
-        
-        const meal = nutritionData[key];
-        html += `
-            <div class="meal-card">
-                <h3 class="meal-title">${meal.title}</h3>
-                <div style="margin-bottom: 15px; font-size: 12px; color: var(--text-muted); display: flex; gap: 15px; flex-wrap: wrap;">
-                    <span>🔥 ${meal.kcal} kcal</span>
-                    <span>🥩 ${meal.protein}g prot</span>
-                    <span>🍚 ${meal.carbs}g carbs</span>
-                    <span>🥑 ${meal.fat}g grasas</span>
-                </div>
-        `;
-        
-        meal.options.forEach(option => {
-            html += `
-                <div class="meal-option">
-                    <div class="meal-option-name">${option.name}</div>
-                    <div class="meal-option-details">${option.details}</div>
-                    <span class="meal-calories">${option.kcal} kcal · ${option.protein}g P · ${option.carbs}g C · ${option.fat}g G</span>
-                </div>
-            `;
-        });
-        
-        html += '</div>';
-    });
-    
-    container.innerHTML = html;
-}
-
         let currentDay = 'day1';
         let savedData = JSON.parse(localStorage.getItem('alvaroGymData')) || {};
         let editMode = false;
         let addingToDay = null;
-
-
-// ========== DATOS DE NUTRICIÓN ==========
-const nutritionData = {
-    desayuno: {
-        title: "Desayuno",
-        kcal: 400,
-        protein: 30,
-        carbs: 40,
-        fat: 14,
-        options: [
-            {name: "Tortilla de 2 huevos + pan integral", details: "2 huevos (120g) + 30g pan integral + 5g aceite oliva", kcal: 380, protein: 16, carbs: 18, fat: 22},
-            {name: "Yogur griego 0% + avena + frutos secos", details: "Yogur 150g + avena 40g + almendras 15g", kcal: 410, protein: 18, carbs: 42, fat: 16},
-            {name: "Batido proteico + plátano", details: "Whey 25g + plátano 100g + leche 250ml + PB 10g", kcal: 420, protein: 32, carbs: 45, fat: 14},
-            {name: "Cottage cheese + tostada + pavo", details: "Queso 150g + pan 30g + pavo 80g", kcal: 390, protein: 36, carbs: 20, fat: 12}
-        ]
-    },
-    comida: {
-        title: "Comida Principal",
-        kcal: 550,
-        protein: 45,
-        carbs: 55,
-        fat: 16,
-        options: [
-            {name: "Pechuga de pollo + arroz integral", details: "Pollo 150g + arroz seco 50g + aceite 8g + verduras", kcal: 560, protein: 38, carbs: 52, fat: 14},
-            {name: "Pavo a la plancha + patata", details: "Pavo 150g + patata 200g + aceite 8g + ensalada", kcal: 540, protein: 35, carbs: 58, fat: 14},
-            {name: "Atún en lata + garbanzos", details: "Atún 120g + garbanzos secos 50g + aceite 8g + tomate", kcal: 530, protein: 36, carbs: 48, fat: 16},
-            {name: "Pasta integral + pollo", details: "Pasta 60g seca + pollo 130g + tomate + aceite 8g", kcal: 570, protein: 34, carbs: 62, fat: 14}
-        ]
-    },
-    pre: {
-        title: "Pre-Entreno",
-        kcal: 200,
-        protein: 15,
-        carbs: 25,
-        fat: 4,
-        options: [
-            {name: "Plátano + yogur natural", details: "Plátano mediano (120g) + yogur 125g", kcal: 190, protein: 5, carbs: 32, fat: 3},
-            {name: "Tostada integral + miel", details: "Pan integral 30g + miel 15g", kcal: 200, protein: 3, carbs: 38, fat: 2},
-            {name: "Batido ligero", details: "Whey 20g + agua + plátano 80g", kcal: 180, protein: 18, carbs: 20, fat: 1},
-            {name: "Pan + cottage cheese", details: "Pan integral 30g + queso 80g", kcal: 210, protein: 14, carbs: 18, fat: 8}
-        ]
-    },
-    cena: {
-        title: "Cena",
-        kcal: 400,
-        protein: 35,
-        carbs: 25,
-        fat: 15,
-        options: [
-            {name: "Merluza + verduras + patata", details: "Pescado 180g + verduras 200g + aceite 8g + patata 100g", kcal: 410, protein: 32, carbs: 28, fat: 14},
-            {name: "Tortilla francesa + ensalada", details: "2 huevos + claras 100g + aceite 8g + espinacas", kcal: 380, protein: 22, carbs: 6, fat: 24},
-            {name: "Pavo + calabacín + queso", details: "Pavo 130g + calabacín 200g + cottage 80g + aceite 5g", kcal: 420, protein: 38, carbs: 10, fat: 20},
-            {name: "Atún + tomate + aguacate", details: "Atún 120g + tomate 200g + aguacate 60g (1/2 pequeño)", kcal: 390, protein: 28, carbs: 16, fat: 22}
-        ]
-    }
-};
-
-// ========== FUNCIONES ==========
-
-function init() {
-    // ... resto de tu código
 
         // Initialize
         function init() {
@@ -1604,7 +1520,7 @@ function init() {
                     <div class="meal-card">
                         <h3 class="meal-title">${meal.title}</h3>
                         <div style="margin-bottom: 15px; font-size: 12px; color: var(--text-muted);">
-                            ${meal.kcal} kcal · ${meal.protein}g proteína
+                            🔥 ${meal.kcal} kcal | 🥩 ${meal.protein}g P | 🍚 ${meal.carbs}g C | 🥑 ${meal.fat}g G
                         </div>
                 `;
                 
@@ -1613,7 +1529,7 @@ function init() {
                         <div class="meal-option">
                             <div class="meal-option-name">${option.name}</div>
                             <div class="meal-option-details">${option.details}</div>
-                            <span class="meal-calories">${option.kcal} kcal · ${option.protein}g prot</span>
+                            <span class="meal-calories">${option.kcal} kcal · ${option.protein}g P · ${option.carbs}g C · ${option.fat}g G</span>
                         </div>
                     `;
                 });
