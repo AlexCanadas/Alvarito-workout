@@ -3,565 +3,516 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Alvarito workout</title>
+  <title>Álvaro workout</title>
   <style>
-    :root {
-      --bg: #0f172a;
-      --panel: #111827;
-      --panel-2: #1f2937;
-      --text: #f3f4f6;
-      --muted: #9ca3af;
-      --accent: #22c55e;
-      --accent-2: #16a34a;
-      --border: #374151;
-      --danger: #ef4444;
+    :root{
+      --bg:#0b1020;
+      --bg2:#11182d;
+      --panel:#121a2f;
+      --panel2:#18233f;
+      --line:#2a3556;
+      --text:#eef2ff;
+      --muted:#9aa6c7;
+      --accent:#8b5cf6;
+      --accent2:#6d28d9;
+      --green:#22c55e;
+      --red:#ef4444;
+      --yellow:#f59e0b;
+      --shadow:0 20px 45px rgba(0,0,0,.35);
+      --radius:18px;
     }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg, #0b1220 0%, #111827 100%);
-      color: var(--text);
-      min-height: 100vh;
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(139,92,246,.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(34,197,94,.12), transparent 22%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      min-height:100vh;
     }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 20px;
+    .wrap{max-width:1180px;margin:0 auto;padding:22px}
+    .hero{
+      background:linear-gradient(180deg, rgba(24,35,63,.96), rgba(18,26,47,.96));
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:24px;
+      margin-bottom:18px;
     }
-
-    h1, h2, h3, h4, p { margin-top: 0; }
-
-    .header {
-      background: rgba(17, 24, 39, 0.95);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    .hero-top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
+    .hero h1{margin:0 0 8px;font-size:clamp(28px,4vw,42px)}
+    .hero p{margin:0;color:var(--muted);line-height:1.55;max-width:860px}
+    .pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .pill{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:#dbe4ff;
+      border-radius:999px;
+      padding:10px 14px;
+      font-size:14px;
+      font-weight:700;
     }
-
-    .header p {
-      color: var(--muted);
-      margin-bottom: 0;
+    .tabs{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:12px;
+      margin-bottom:18px;
     }
-
-    .tabs {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
-      margin-bottom: 20px;
+    .tab{
+      appearance:none;border:none;cursor:pointer;
+      background:linear-gradient(180deg,#172342,#121a2f);
+      color:#dbe4ff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px 12px;
+      font-weight:800;
+      font-size:15px;
+      transition:.18s ease;
+      box-shadow:0 8px 20px rgba(0,0,0,.18);
     }
-
-    .tab-btn {
-      border: 1px solid var(--border);
-      background: var(--panel);
-      color: var(--text);
-      padding: 12px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 700;
-      transition: 0.2s ease;
+    .tab:hover{transform:translateY(-1px)}
+    .tab.active{
+      background:linear-gradient(180deg,var(--accent),var(--accent2));
+      color:white;border-color:transparent;
     }
-
-    .tab-btn:hover { transform: translateY(-1px); }
-
-    .tab-btn.active {
-      background: var(--accent);
-      color: #062b12;
-      border-color: var(--accent);
+    .panel{
+      display:none;
+      background:linear-gradient(180deg, rgba(18,26,47,.97), rgba(15,23,42,.97));
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:20px;
     }
-
-    .panel {
-      display: none;
-      background: rgba(17, 24, 39, 0.95);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    .panel.active{display:block}
+    .panel-head{
+      display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;
+      margin-bottom:16px;
     }
-
-    .panel.active { display: block; }
-
-    .day-meta {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-      margin-bottom: 18px;
+    .panel-head h2{margin:0 0 6px;font-size:28px}
+    .panel-head p{margin:0;color:var(--muted)}
+    .stats{display:grid;grid-template-columns:repeat(3,minmax(170px,1fr));gap:12px;width:min(560px,100%)}
+    .stat{
+      background:linear-gradient(180deg,#172342,#131b32);
+      border:1px solid var(--line);
+      border-radius:16px;padding:14px;
     }
-
-    .meta-box {
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
+    .stat .k{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px}
+    .stat .v{font-size:16px;font-weight:800}
+    .exercise{
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:linear-gradient(180deg, rgba(24,35,63,.96), rgba(17,24,39,.96));
+      padding:16px;
+      margin-bottom:14px;
     }
-
-    .meta-box .label {
-      font-size: 12px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 6px;
+    .exercise-top{
+      display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap;
+      margin-bottom:12px;
     }
-
-    .exercise-list {
-      display: grid;
-      gap: 14px;
+    .exercise h3{margin:0 0 6px;font-size:22px}
+    .exercise small{color:var(--muted);font-size:14px}
+    .tag{
+      background:rgba(34,197,94,.12);
+      color:#a7f3d0;
+      border:1px solid rgba(34,197,94,.25);
+      border-radius:999px;
+      padding:7px 12px;
+      font-size:12px;font-weight:800;
+      white-space:nowrap;
     }
-
-    .exercise-card {
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 14px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      text-decoration:none;font-weight:800;
+      border-radius:12px;padding:11px 14px;
+      border:1px solid var(--line);color:white;
+      background:linear-gradient(180deg,#243257,#192542);
     }
-
-    .exercise-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: start;
-      gap: 12px;
-      margin-bottom: 10px;
+    .btn.video{background:linear-gradient(180deg,#ef4444,#b91c1c);border-color:transparent}
+    .btn.save{background:linear-gradient(180deg,var(--green),#15803d);border-color:transparent}
+    .btn.clear{background:linear-gradient(180deg,#334155,#1f2937)}
+    .note{
+      color:#dbe4ff;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      line-height:1.55;
+      margin-bottom:14px;
     }
-
-    .exercise-top h3 {
-      margin-bottom: 6px;
-      font-size: 20px;
+    .series-box{
+      border:1px solid var(--line);
+      border-radius:16px;
+      overflow:hidden;
+      background:#0f172a;
     }
-
-    .badge {
-      background: rgba(34, 197, 94, 0.15);
-      color: #86efac;
-      border: 1px solid rgba(34, 197, 94, 0.35);
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 12px;
-      white-space: nowrap;
-      font-weight: 700;
+    .series-head, .series-row{
+      display:grid;
+      grid-template-columns:90px 1fr 1fr 120px;
+      gap:10px;
+      align-items:center;
+      padding:10px 12px;
     }
-
-    .exercise-details {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 10px;
-      margin: 10px 0 12px;
+    .series-head{
+      background:#131d34;
+      color:#c7d2fe;
+      font-size:13px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.05em;
     }
-
-    .detail {
-      background: #0f172a;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px;
+    .series-row{border-top:1px solid var(--line)}
+    .series-label{font-weight:800}
+    .input{
+      width:100%;
+      background:#0b1222;
+      color:#eef2ff;
+      border:1px solid #334155;
+      border-radius:10px;
+      padding:10px 12px;
+      font-size:14px;
+      outline:none;
     }
-
-    .detail span {
-      display: block;
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 4px;
+    .input:focus{border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.18)}
+    .check{
+      display:flex;align-items:center;gap:8px;justify-content:flex-start;font-size:14px;color:#dbe4ff
     }
-
-    .exercise-note {
-      color: #d1d5db;
-      margin-bottom: 12px;
-      line-height: 1.5;
+    .check input{width:18px;height:18px}
+    .summary{
+      margin-top:12px;
+      color:var(--muted);
+      font-size:14px;
     }
-
-    .exercise-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
+    .nutrition-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
     }
-
-    .video-link {
-      display: inline-block;
-      text-decoration: none;
-      color: white;
-      background: #dc2626;
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-weight: 700;
+    .nutrition-card{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:linear-gradient(180deg,#172342,#111827);
+      padding:16px;
     }
-
-    .check-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      font-size: 14px;
+    .nutrition-card h3{margin:0 0 10px}
+    .nutrition-card ul{margin:0;padding-left:18px;line-height:1.7}
+    .nutrition-card li + li{margin-top:6px}
+    .nutrition-card p{color:var(--muted);margin:8px 0 0}
+    .footer{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:14px;
     }
-
-    .nutrition-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
-      margin-top: 14px;
+    @media (max-width: 920px){
+      .tabs{grid-template-columns:repeat(2,1fr)}
+      .stats{grid-template-columns:1fr}
+      .nutrition-grid{grid-template-columns:1fr}
+      .series-head,.series-row{grid-template-columns:70px 1fr 1fr 90px}
     }
-
-    .nutrition-card {
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-    }
-
-    .nutrition-card ul {
-      margin: 0;
-      padding-left: 18px;
-      line-height: 1.7;
-      color: #e5e7eb;
-    }
-
-    .small {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .footer-note {
-      margin-top: 20px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    @media (max-width: 800px) {
-      .tabs { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 640px){
+      .wrap{padding:14px}
+      .panel,.hero{padding:16px}
+      .series-head,.series-row{grid-template-columns:56px 1fr 1fr 72px;font-size:12px}
+      .input{padding:9px 8px}
+      .exercise h3{font-size:18px}
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>Alvarito workout</h1>
-      <p>Objetivo: perder grasa, mantener músculo y seguir un plan simple. Trabaja con buena técnica, deja 1-2 repeticiones en recámara en la mayoría de series y progresa poco a poco.</p>
-    </div>
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <h1>Álvaro workout</h1>
+          <p>Plan de 4 días en casa para perder grasa, mantener músculo y tener una rutina fácil de seguir. La idea es completar las series, anotar peso y repeticiones reales y progresar poco a poco semana a semana.</p>
+          <div class="pill-row">
+            <div class="pill">4 días de fuerza</div>
+            <div class="pill">Casa · banco · mancuernas · kettlebell · gomas</div>
+            <div class="pill">Entreno orientativo: 18:30</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <div class="tabs" id="tabs"></div>
-    <div id="content"></div>
+    <nav class="tabs" id="tabs"></nav>
+    <main id="content"></main>
   </div>
 
   <script>
-    const data = [
+    const days = [
       {
-        id: 'dia1',
-        tab: 'Día 1',
-        title: 'Día 1 - Upper A',
-        focus: 'Empuje + tirón básico',
-        duration: '50-65 min',
-        tip: 'Descansa 60-90 s en accesorios y 90-120 s en básicos.',
-        exercises: [
+        id:'dia1',
+        tab:'Día 1',
+        title:'Día 1 · Upper A',
+        focus:'Pecho, espalda, hombro y brazos',
+        duration:'55-70 min',
+        goal:'Buscar buena técnica y subir reps antes que peso',
+        exercises:[
           {
-            name: 'Press banca plano con mancuernas',
-            tag: 'Pecho',
-            sets: '4',
-            reps: '8-12',
-            rest: '90-120 s',
-            note: 'Banco recto, escápulas juntas, baja controlado y sube fuerte sin rebotar.',
-            video: 'https://www.youtube.com/results?search_query=press+banca+plano+mancuernas'
+            name:'Press banca plano con mancuernas',
+            tag:'Pecho',
+            preset:['10','10','10','10'],
+            note:'Banco recto, hombros atrás y pecho firme. Baja controlado y sube sin rebotar.',
+            video:'https://www.youtube.com/results?search_query=press+banca+plano+con+mancuernas'
           },
           {
-            name: 'Remo con mancuerna a una mano',
-            tag: 'Espalda',
-            sets: '4',
-            reps: '10-12 por lado',
-            rest: '75-90 s',
-            note: 'Apoya una mano y una rodilla en el banco. Lleva el codo hacia la cadera.',
-            video: 'https://www.youtube.com/results?search_query=remo+con+mancuerna+a+una+mano'
+            name:'Remo con mancuerna a una mano',
+            tag:'Espalda',
+            preset:['12','12','12','12'],
+            note:'Apoya mano y rodilla en el banco. Lleva el codo hacia la cadera y no tires con el cuello.',
+            video:'https://www.youtube.com/results?search_query=remo+con+mancuerna+a+una+mano'
           },
           {
-            name: 'Press militar con mancuernas sentado',
-            tag: 'Hombro',
-            sets: '3',
-            reps: '8-12',
-            rest: '75-90 s',
-            note: 'Aprieta abdomen y glúteos, no arquees la zona lumbar.',
-            video: 'https://www.youtube.com/results?search_query=press+militar+con+mancuernas+sentado'
+            name:'Press militar con mancuernas sentado',
+            tag:'Hombro',
+            preset:['10','10','10'],
+            note:'Mantén abdomen fuerte y evita arquear la espalda baja.',
+            video:'https://www.youtube.com/results?search_query=press+militar+sentado+con+mancuernas'
           },
           {
-            name: 'Pájaros con mancuernas en banco inclinado',
-            tag: 'Deltoide posterior',
-            sets: '3',
-            reps: '12-20',
-            rest: '60 s',
-            note: 'Pecho apoyado en banco inclinado. Abre con control sin balancear el tronco.',
-            video: 'https://www.youtube.com/results?search_query=pajaros+mancuernas+banco+inclinado'
+            name:'Pájaros en banco inclinado',
+            tag:'Deltoide posterior',
+            preset:['15','15','15'],
+            note:'Pecho apoyado en banco inclinado. Movimiento limpio, sin balanceos.',
+            video:'https://www.youtube.com/results?search_query=pajaros+en+banco+inclinado+mancuernas'
           },
           {
-            name: 'Curl de bíceps con mancuernas',
-            tag: 'Bíceps',
-            sets: '3',
-            reps: '10-15',
-            rest: '60 s',
-            note: 'Codos pegados al cuerpo y sin impulso.',
-            video: 'https://www.youtube.com/results?search_query=curl+de+biceps+con+mancuernas'
+            name:'Curl de bíceps con mancuernas',
+            tag:'Bíceps',
+            preset:['12','12','12'],
+            note:'Codos pegados al cuerpo. Evita impulso con la espalda.',
+            video:'https://www.youtube.com/results?search_query=curl+de+biceps+con+mancuernas'
           },
           {
-            name: 'Extensión de tríceps por encima de la cabeza',
-            tag: 'Tríceps',
-            sets: '3',
-            reps: '10-15',
-            rest: '60 s',
-            note: 'Puede hacerse con una mancuerna a dos manos o con goma.',
-            video: 'https://www.youtube.com/results?search_query=extension+triceps+por+encima+de+la+cabeza+mancuerna'
+            name:'Extensión de tríceps por encima de la cabeza',
+            tag:'Tríceps',
+            preset:['12','12','12'],
+            note:'Puede hacerse con una mancuerna o con goma. Baja controlado y extiende del todo.',
+            video:'https://www.youtube.com/results?search_query=extension+de+triceps+por+encima+de+la+cabeza+mancuerna'
           }
         ]
       },
       {
-        id: 'dia2',
-        tab: 'Día 2',
-        title: 'Día 2 - Lower A',
-        focus: 'Cuádriceps + glúteo + femoral',
-        duration: '50-65 min',
-        tip: 'Prioriza rango de movimiento y control antes que peso.',
-        exercises: [
+        id:'dia2',
+        tab:'Día 2',
+        title:'Día 2 · Lower A',
+        focus:'Cuádriceps, femoral, glúteo y core',
+        duration:'55-70 min',
+        goal:'Controlar la bajada y rango completo',
+        exercises:[
           {
-            name: 'Sentadilla goblet',
-            tag: 'Pierna',
-            sets: '4',
-            reps: '10-15',
-            rest: '90 s',
-            note: 'Sujeta una mancuerna o kettlebell delante del pecho y baja con torso firme.',
-            video: 'https://www.youtube.com/results?search_query=sentadilla+goblet'
+            name:'Sentadilla goblet',
+            tag:'Pierna',
+            preset:['12','12','12','12'],
+            note:'Sujeta la mancuerna o kettlebell delante del pecho. Baja profundo manteniendo el torso firme.',
+            video:'https://www.youtube.com/results?search_query=sentadilla+goblet'
           },
           {
-            name: 'Peso muerto rumano con mancuernas',
-            tag: 'Femoral',
-            sets: '4',
-            reps: '8-12',
-            rest: '90-120 s',
-            note: 'Cadera atrás, espalda neutra y siente estiramiento en femoral.',
-            video: 'https://www.youtube.com/results?search_query=peso+muerto+rumano+con+mancuernas'
+            name:'Peso muerto rumano con mancuernas',
+            tag:'Femoral',
+            preset:['10','10','10','10'],
+            note:'Cadera atrás, espalda neutra y estiramiento claro en femoral.',
+            video:'https://www.youtube.com/results?search_query=peso+muerto+rumano+con+mancuernas'
           },
           {
-            name: 'Zancadas hacia atrás con mancuernas',
-            tag: 'Pierna',
-            sets: '3',
-            reps: '10-12 por pierna',
-            rest: '75-90 s',
-            note: 'Da un paso largo atrás y mantén el torso estable.',
-            video: 'https://www.youtube.com/results?search_query=zancadas+hacia+atras+con+mancuernas'
+            name:'Zancadas hacia atrás con mancuernas',
+            tag:'Pierna',
+            preset:['10','10','10'],
+            note:'Hazlas por pierna. Paso atrás largo y tronco estable.',
+            video:'https://www.youtube.com/results?search_query=zancadas+hacia+atras+con+mancuernas'
           },
           {
-            name: 'Hip thrust con espalda en banco',
-            tag: 'Glúteo',
-            sets: '3',
-            reps: '10-15',
-            rest: '75-90 s',
-            note: 'Pausa 1 segundo arriba apretando glúteos.',
-            video: 'https://www.youtube.com/results?search_query=hip+thrust+con+mancuerna+banco'
+            name:'Hip thrust con espalda en banco',
+            tag:'Glúteo',
+            preset:['12','12','12'],
+            note:'Pausa un segundo arriba y aprieta glúteos fuerte.',
+            video:'https://www.youtube.com/results?search_query=hip+thrust+con+mancuerna+banco'
           },
           {
-            name: 'Elevación de gemelos de pie',
-            tag: 'Gemelo',
-            sets: '4',
-            reps: '12-20',
-            rest: '45-60 s',
-            note: 'Sube fuerte, baja lento y busca recorrido completo.',
-            video: 'https://www.youtube.com/results?search_query=elevacion+de+gemelos+de+pie'
+            name:'Elevación de gemelos de pie',
+            tag:'Gemelo',
+            preset:['15','15','15','15'],
+            note:'Sube rápido, baja lento y busca recorrido completo.',
+            video:'https://www.youtube.com/results?search_query=elevacion+de+gemelos+de+pie'
           },
           {
-            name: 'Plancha frontal',
-            tag: 'Core',
-            sets: '3',
-            reps: '30-45 s',
-            rest: '45 s',
-            note: 'Cuerpo recto, abdomen apretado y glúteos activos.',
-            video: 'https://www.youtube.com/results?search_query=plancha+frontal+ejercicio'
+            name:'Plancha frontal',
+            tag:'Core',
+            preset:['35 s','35 s','35 s'],
+            note:'Cuerpo recto, abdomen duro y glúteos activos.',
+            video:'https://www.youtube.com/results?search_query=plancha+frontal+tecnica'
           }
         ]
       },
       {
-        id: 'dia3',
-        tab: 'Día 3',
-        title: 'Día 3 - Upper B',
-        focus: 'Variación de torso',
-        duration: '50-65 min',
-        tip: 'Busca progresar en repeticiones antes de subir peso.',
-        exercises: [
+        id:'dia3',
+        tab:'Día 3',
+        title:'Día 3 · Upper B',
+        focus:'Torso con otra variante de empuje y tirón',
+        duration:'55-70 min',
+        goal:'Subir reps con buena forma antes de cargar más',
+        exercises:[
           {
-            name: 'Press inclinado con mancuernas',
-            tag: 'Pecho superior',
-            sets: '4',
-            reps: '8-12',
-            rest: '90-120 s',
-            note: 'Banco inclinado moderado, no muy vertical.',
-            video: 'https://www.youtube.com/results?search_query=press+inclinado+con+mancuernas'
+            name:'Press inclinado con mancuernas',
+            tag:'Pecho superior',
+            preset:['10','10','10','10'],
+            note:'Usa una inclinación moderada del banco, no demasiado vertical.',
+            video:'https://www.youtube.com/results?search_query=press+inclinado+con+mancuernas'
           },
           {
-            name: 'Remo pecho apoyado en banco inclinado',
-            tag: 'Espalda',
-            sets: '4',
-            reps: '10-12',
-            rest: '75-90 s',
-            note: 'Apoya el pecho en el banco para aislar mejor la espalda y evitar tirones.',
-            video: 'https://www.youtube.com/results?search_query=remo+pecho+apoyado+banco+inclinado+mancuernas'
+            name:'Remo pecho apoyado en banco inclinado',
+            tag:'Espalda',
+            preset:['12','12','12','12'],
+            note:'Apoya pecho en el banco para centrarte en la espalda y evitar tirones.',
+            video:'https://www.youtube.com/results?search_query=remo+pecho+apoyado+en+banco+inclinado'
           },
           {
-            name: 'Flexiones',
-            tag: 'Pecho',
-            sets: '3',
-            reps: 'Cerca del fallo técnico',
-            rest: '75 s',
-            note: 'Si cuesta mucho, apoya manos en banco. Si resulta fácil, eleva pies.',
-            video: 'https://www.youtube.com/results?search_query=flexiones+tecnica'
+            name:'Flexiones',
+            tag:'Pecho',
+            preset:['12','12','12'],
+            note:'Si cuesta mucho, manos elevadas en banco. Si es fácil, pies elevados.',
+            video:'https://www.youtube.com/results?search_query=flexiones+tecnica'
           },
           {
-            name: 'Elevaciones laterales con mancuernas',
-            tag: 'Hombro',
-            sets: '3',
-            reps: '12-20',
-            rest: '60 s',
-            note: 'Sube hasta línea de hombros sin encoger trapecio.',
-            video: 'https://www.youtube.com/results?search_query=elevaciones+laterales+con+mancuernas'
+            name:'Elevaciones laterales con mancuernas',
+            tag:'Hombro',
+            preset:['15','15','15'],
+            note:'Sube hasta línea de hombros sin encoger trapecio.',
+            video:'https://www.youtube.com/results?search_query=elevaciones+laterales+con+mancuernas'
           },
           {
-            name: 'Curl martillo',
-            tag: 'Bíceps',
-            sets: '3',
-            reps: '10-15',
-            rest: '60 s',
-            note: 'Agarre neutro, controla la bajada.',
-            video: 'https://www.youtube.com/results?search_query=curl+martillo+mancuernas'
+            name:'Curl martillo',
+            tag:'Bíceps',
+            preset:['12','12','12'],
+            note:'Agarre neutro y bajada controlada.',
+            video:'https://www.youtube.com/results?search_query=curl+martillo+con+mancuernas'
           },
           {
-            name: 'Fondos en banco o tríceps con goma',
-            tag: 'Tríceps',
-            sets: '3',
-            reps: '10-15',
-            rest: '60 s',
-            note: 'Si los fondos molestan hombro, usa mejor la goma.',
-            video: 'https://www.youtube.com/results?search_query=triceps+con+goma+o+fondos+en+banco'
+            name:'Fondos en banco o tríceps con goma',
+            tag:'Tríceps',
+            preset:['12','12','12'],
+            note:'Si el hombro molesta en fondos, mejor la goma.',
+            video:'https://www.youtube.com/results?search_query=triceps+con+goma+fondos+en+banco'
           }
         ]
       },
       {
-        id: 'dia4',
-        tab: 'Día 4',
-        title: 'Día 4 - Lower B',
-        focus: 'Pierna unilateral + cadena posterior',
-        duration: '50-65 min',
-        tip: 'Mantén buena técnica y estabilidad en ejercicios por pierna.',
-        exercises: [
+        id:'dia4',
+        tab:'Día 4',
+        title:'Día 4 · Lower B',
+        focus:'Pierna unilateral, glúteo y cadena posterior',
+        duration:'55-70 min',
+        goal:'Estabilidad, control y trabajo por pierna',
+        exercises:[
           {
-            name: 'Sentadilla búlgara',
-            tag: 'Pierna',
-            sets: '3',
-            reps: '8-12 por pierna',
-            rest: '90 s',
-            note: 'Pie trasero apoyado en banco. Baja controlado y con torso ligeramente inclinado.',
-            video: 'https://www.youtube.com/results?search_query=sentadilla+bulgara+con+mancuernas'
+            name:'Sentadilla búlgara',
+            tag:'Pierna',
+            preset:['10','10','10'],
+            note:'Por pierna. Pie trasero apoyado en banco y bajada controlada.',
+            video:'https://www.youtube.com/results?search_query=sentadilla+bulgara+con+mancuernas'
           },
           {
-            name: 'Peso muerto rumano con mancuernas',
-            tag: 'Femoral',
-            sets: '4',
-            reps: '8-12',
-            rest: '90-120 s',
-            note: 'Repite para consolidar patrón y progresar carga.',
-            video: 'https://www.youtube.com/results?search_query=peso+muerto+rumano+con+mancuernas'
+            name:'Peso muerto rumano con mancuernas',
+            tag:'Femoral',
+            preset:['10','10','10','10'],
+            note:'Repite para consolidar técnica y progresar.',
+            video:'https://www.youtube.com/results?search_query=peso+muerto+rumano+con+mancuernas'
           },
           {
-            name: 'Step-up al banco',
-            tag: 'Pierna',
-            sets: '3',
-            reps: '10-12 por pierna',
-            rest: '75-90 s',
-            note: 'Sube empujando con la pierna de arriba, sin impulso excesivo de la de abajo.',
-            video: 'https://www.youtube.com/results?search_query=step+up+al+banco+con+mancuernas'
+            name:'Step-up al banco',
+            tag:'Pierna',
+            preset:['10','10','10'],
+            note:'Por pierna. Sube empujando con la pierna de arriba, sin impulso raro.',
+            video:'https://www.youtube.com/results?search_query=step+up+al+banco+con+mancuernas'
           },
           {
-            name: 'Puente de glúteo en suelo con mancuerna',
-            tag: 'Glúteo',
-            sets: '3',
-            reps: '12-15',
-            rest: '75 s',
-            note: 'Si el hip thrust molesta, esta variante suele ser más cómoda.',
-            video: 'https://www.youtube.com/results?search_query=puente+de+gluteo+con+mancuerna'
+            name:'Puente de glúteo con mancuerna',
+            tag:'Glúteo',
+            preset:['15','15','15'],
+            note:'Variante cómoda si ese día no apetece hip thrust.',
+            video:'https://www.youtube.com/results?search_query=puente+de+gluteo+con+mancuerna'
           },
           {
-            name: 'Elevación de gemelos de pie',
-            tag: 'Gemelo',
-            sets: '4',
-            reps: '12-20',
-            rest: '45-60 s',
-            note: 'Haz una pausa breve arriba.',
-            video: 'https://www.youtube.com/results?search_query=elevacion+de+gemelos+de+pie'
+            name:'Elevación de gemelos de pie',
+            tag:'Gemelo',
+            preset:['15','15','15','15'],
+            note:'Pausa arriba un instante y baja lento.',
+            video:'https://www.youtube.com/results?search_query=elevacion+de+gemelos+de+pie'
           },
           {
-            name: 'Dead bug',
-            tag: 'Core',
-            sets: '3',
-            reps: '8-12 por lado',
-            rest: '45 s',
-            note: 'Lumbar pegada al suelo y movimiento lento.',
-            video: 'https://www.youtube.com/results?search_query=dead+bug+ejercicio'
+            name:'Dead bug',
+            tag:'Core',
+            preset:['10','10','10'],
+            note:'Por lado. Lumbar pegada al suelo todo el tiempo.',
+            video:'https://www.youtube.com/results?search_query=dead+bug+ejercicio'
           }
         ]
       },
       {
-        id: 'nutricion',
-        tab: 'Nutrición',
-        title: 'Nutrición - Guía simple',
-        intro: 'La idea no es hacer una dieta rara, sino ordenar lo que ya come y facilitar adherencia.',
-        blocks: [
-          {
-            title: 'Objetivos base',
-            items: [
-              'Priorizar proteína en 3-4 momentos del día.',
-              'Mantener un déficit moderado, sin pasar hambre extrema.',
-              'Usar patata, boniato, arroz y fruta como carbohidratos principales.',
-              'Cenar ligero, pero con proteína clara.'
-            ]
-          },
-          {
-            title: 'Ideas de media mañana',
-            items: [
-              'Yogur alto en proteína + fruta.',
-              'Yogur + un poco de avena.',
-              'Queso fresco batido + fruta.',
-              'Wrap integral pequeño de pavo.',
-              'Fruta + puñado pequeño de pistachos.'
-            ]
-          },
-          {
-            title: 'Comidas fáciles',
-            items: [
-              'Ensalada de patata cocida + tomate + atún o ventresca.',
-              'Pollo o pavo + arroz + pimiento o guisantes.',
-              'Carne a la plancha + boniato airfryer + ensalada.',
-              'Tomate con queso y atún aliñado.',
-              'Patata cocida + bonito + tomate + aceitunas medidas.'
-            ]
-          },
-          {
-            title: 'Cenas ligeras',
-            items: [
-              'Tomate con atún y queso fresco.',
-              'Boquerones + tomate + tostada integral.',
-              'Hummus medido + crudités + pavo.',
-              'Tortilla + ensalada.',
-              'Yogur alto en proteína si ese día va con poco hambre.'
-            ]
-          },
-          {
-            title: 'Controlar sin prohibir',
-            items: [
-              'Ojo con embutidos ibéricos, quesos curados, pistachos, hummus y aceitunas: suman calorías rápido.',
-              'No hace falta quitar arroz o patata; solo controlar cantidades.',
-              'Los findes puede comer carne, pero mejor con buena guarnición y sin picoteo excesivo.'
-            ]
-          },
-          {
-            title: 'Antes de entrenar a las 18:30',
-            items: [
-              'Tomar algo ligero 60-90 min antes si llega con hambre o poca energía.',
-              'Ejemplos: yogur + fruta, plátano, tostada integral con pavo, o yogur con avena.'
-            ]
-          }
+        id:'nutri',
+        tab:'Nutrición',
+        nutrition:true
+      }
+    ];
+
+    const nutritionBlocks = [
+      {
+        title:'Objetivo diario simple',
+        items:[
+          'Proteína: 130-160 g al día.',
+          'Agua: 2-2,5 litros.',
+          'Verdura: 2 raciones mínimas al día.',
+          'Pasos: 8.000-10.000 si puede.'
+        ],
+        note:'No hace falta hacerlo perfecto. Lo importante es repetir una estructura sencilla.'
+      },
+      {
+        title:'Media mañana en el trabajo',
+        items:[
+          '1 yogur alto en proteína (150-200 g) + 1 fruta.',
+          'O 200 g de queso fresco batido + 1 fruta.',
+          'O 1 yogur + 30-40 g de avena.',
+          'O 1 wrap integral pequeño + 80-100 g de pavo.'
+        ]
+      },
+      {
+        title:'Comidas base',
+        items:[
+          'Pollo o pavo 180-220 g + patata cocida 250-350 g + tomate/pimiento.',
+          'Arroz cocido 150-220 g + pollo/pavo 180-220 g + guisantes o habitas.',
+          'Atún, bonito o ventresca 120-160 g + patata cocida 250-300 g + tomate.',
+          'Carne magra 180-220 g + boniato 250-350 g + ensalada.'
+        ]
+      },
+      {
+        title:'Cenas ligeras pero útiles',
+        items:[
+          'Tomate + 1 lata de atún o bonito + 60-80 g de queso fresco.',
+          'Boquerones 100-150 g + tomate + 1 tostada integral.',
+          'Hummus 40-60 g + crudités + 100-120 g de pavo.',
+          'Tortilla de 2-3 huevos + ensalada.',
+          'Yogur alto en proteína 200 g si ese día hay poca hambre.'
+        ]
+      },
+      {
+        title:'Antes de entrenar (17:00-17:45)',
+        items:[
+          '1 yogur + 1 plátano.',
+          '1 fruta + 2-4 lonchas de pavo.',
+          '1 yogur con 25-30 g de avena.',
+          '1 tostada integral con pavo o queso fresco.'
+        ]
+      },
+      {
+        title:'Controlar sin prohibir',
+        items:[
+          'Pistachos: mejor 20-30 g, no bolsa libre.',
+          'Hummus: 40-60 g por toma.',
+          'Aceitunas: 8-12 unidades.',
+          'Quesos curados e ibéricos: mejor ración pequeña y no a diario.',
+          'Ventresca: perfecta, pero mejor controlar cantidad porque suma calorías rápido.'
         ]
       }
     ];
@@ -569,105 +520,176 @@
     const tabs = document.getElementById('tabs');
     const content = document.getElementById('content');
 
-    function renderTabs() {
-      tabs.innerHTML = data.map((item, index) => `
-        <button class="tab-btn ${index === 0 ? 'active' : ''}" data-id="${item.id}">${item.tab}</button>
+    function storageKey(dayId, exIndex, setIndex, field){
+      return `alvaro_${dayId}_${exIndex}_${setIndex}_${field}`;
+    }
+
+    function renderTabs(){
+      tabs.innerHTML = days.map((d,i)=>`
+        <button class="tab ${i===0?'active':''}" data-tab="${d.id}">${d.tab}</button>
       `).join('');
     }
 
-    function renderPanels() {
-      content.innerHTML = data.map((item, index) => {
-        if (item.id === 'nutricion') {
-          return `
-            <section class="panel ${index === 4 ? '' : ''} ${item.id === 'dia1' ? 'active' : ''}" id="${item.id}">
-              <h2>${item.title}</h2>
-              <p class="small">${item.intro}</p>
-              <div class="nutrition-grid">
-                ${item.blocks.map(block => `
-                  <div class="nutrition-card">
-                    <h3>${block.title}</h3>
-                    <ul>
-                      ${block.items.map(i => `<li>${i}</li>`).join('')}
-                    </ul>
+    function renderNutrition(){
+      return `
+        <section class="panel" id="nutri">
+          <div class="panel-head">
+            <div>
+              <h2>Nutrición</h2>
+              <p>Comer simple, repetir estructura y controlar cantidades sin obsesionarse.</p>
+            </div>
+            <div class="stats">
+              <div class="stat"><div class="k">Proteína</div><div class="v">130-160 g/día</div></div>
+              <div class="stat"><div class="k">Comidas clave</div><div class="v">3-4 tomas con proteína</div></div>
+              <div class="stat"><div class="k">Objetivo</div><div class="v">Déficit moderado</div></div>
+            </div>
+          </div>
+          <div class="nutrition-grid">
+            ${nutritionBlocks.map(block=>`
+              <article class="nutrition-card">
+                <h3>${block.title}</h3>
+                <ul>${block.items.map(i=>`<li>${i}</li>`).join('')}</ul>
+                ${block.note?`<p>${block.note}</p>`:''}
+              </article>
+            `).join('')}
+          </div>
+          <div class="footer">Los datos que se escriban en esta app se guardan en el navegador del usuario de ese dispositivo mediante almacenamiento local.</div>
+        </section>
+      `;
+    }
+
+    function renderDays(){
+      return days.filter(d=>!d.nutrition).map((day, dayIndex)=>`
+        <section class="panel ${dayIndex===0?'active':''}" id="${day.id}">
+          <div class="panel-head">
+            <div>
+              <h2>${day.title}</h2>
+              <p>${day.focus}</p>
+            </div>
+            <div class="stats">
+              <div class="stat"><div class="k">Duración</div><div class="v">${day.duration}</div></div>
+              <div class="stat"><div class="k">Objetivo</div><div class="v">${day.goal}</div></div>
+              <div class="stat"><div class="k">Descanso</div><div class="v">60-120 s según ejercicio</div></div>
+            </div>
+          </div>
+
+          ${day.exercises.map((ex, exIndex)=>`
+            <article class="exercise">
+              <div class="exercise-top">
+                <div>
+                  <h3>${exIndex+1}. ${ex.name}</h3>
+                  <small>${ex.note}</small>
+                </div>
+                <div class="tag">${ex.tag}</div>
+              </div>
+
+              <div class="actions">
+                <a class="btn video" href="${ex.video}" target="_blank" rel="noopener noreferrer">Ver vídeo</a>
+                <button class="btn save" onclick="saveExercise('${day.id}', ${exIndex})">Guardar</button>
+                <button class="btn clear" onclick="clearExercise('${day.id}', ${exIndex}, ${ex.preset.length})">Limpiar</button>
+              </div>
+
+              <div class="series-box">
+                <div class="series-head">
+                  <div>Serie</div>
+                  <div>Reps objetivo / reales</div>
+                  <div>Peso</div>
+                  <div>Hecha</div>
+                </div>
+                ${ex.preset.map((rep, setIndex)=>`
+                  <div class="series-row">
+                    <div class="series-label">${setIndex+1}</div>
+                    <div>
+                      <input class="input" id="${day.id}_${exIndex}_${setIndex}_reps" value="${rep}" />
+                    </div>
+                    <div>
+                      <input class="input" id="${day.id}_${exIndex}_${setIndex}_weight" placeholder="kg" />
+                    </div>
+                    <label class="check">
+                      <input type="checkbox" id="${day.id}_${exIndex}_${setIndex}_done" />
+                      OK
+                    </label>
                   </div>
                 `).join('')}
               </div>
-              <p class="footer-note">Consejo: una app así solo guarda datos en el navegador del usuario cuando se programa para ello. Si la usa él desde su móvil o PC, lo que marque o escriba lo verá él en su dispositivo.</p>
-            </section>
-          `;
-        }
-
-        return `
-          <section class="panel ${index === 0 ? 'active' : ''}" id="${item.id}">
-            <h2>${item.title}</h2>
-            <div class="day-meta">
-              <div class="meta-box">
-                <div class="label">Enfoque</div>
-                <div>${item.focus}</div>
-              </div>
-              <div class="meta-box">
-                <div class="label">Duración</div>
-                <div>${item.duration}</div>
-              </div>
-              <div class="meta-box">
-                <div class="label">Nota</div>
-                <div>${item.tip}</div>
-              </div>
-            </div>
-
-            <div class="exercise-list">
-              ${item.exercises.map((ex, exIndex) => `
-                <article class="exercise-card">
-                  <div class="exercise-top">
-                    <div>
-                      <h3>${exIndex + 1}. ${ex.name}</h3>
-                    </div>
-                    <div class="badge">${ex.tag}</div>
-                  </div>
-
-                  <div class="exercise-details">
-                    <div class="detail"><span>Series</span>${ex.sets}</div>
-                    <div class="detail"><span>Reps</span>${ex.reps}</div>
-                    <div class="detail"><span>Descanso</span>${ex.rest}</div>
-                  </div>
-
-                  <p class="exercise-note">${ex.note}</p>
-
-                  <div class="exercise-actions">
-                    <a class="video-link" href="${ex.video}" target="_blank" rel="noopener noreferrer">Ver vídeo</a>
-                    <label class="check-wrap">
-                      <input type="checkbox" />
-                      Completado
-                    </label>
-                  </div>
-                </article>
-              `).join('')}
-            </div>
-          </section>
-        `;
-      }).join('');
+              <div class="summary">Consejo: cuando completes todas las series con margen y buena técnica, la próxima vez sube un poco el peso o intenta 1 repetición más por serie.</div>
+            </article>
+          `).join('')}
+        </section>
+      `).join('');
     }
 
-    function setupTabs() {
-      const buttons = document.querySelectorAll('.tab-btn');
-      const panels = document.querySelectorAll('.panel');
+    function renderPanels(){
+      content.innerHTML = renderDays() + renderNutrition();
+    }
 
-      buttons.forEach(button => {
-        button.addEventListener('click', () => {
-          const id = button.dataset.id;
-
-          buttons.forEach(btn => btn.classList.remove('active'));
-          panels.forEach(panel => panel.classList.remove('active'));
-
-          button.classList.add('active');
-          document.getElementById(id).classList.add('active');
+    function bindTabs(){
+      document.querySelectorAll('.tab').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+          document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById(btn.dataset.tab).classList.add('active');
         });
       });
     }
 
+    function hydrateSavedValues(){
+      days.filter(d=>!d.nutrition).forEach(day=>{
+        day.exercises.forEach((ex, exIndex)=>{
+          ex.preset.forEach((_, setIndex)=>{
+            const repsId = `${day.id}_${exIndex}_${setIndex}_reps`;
+            const weightId = `${day.id}_${exIndex}_${setIndex}_weight`;
+            const doneId = `${day.id}_${exIndex}_${setIndex}_done`;
+
+            const repsSaved = localStorage.getItem(storageKey(day.id, exIndex, setIndex, 'reps'));
+            const weightSaved = localStorage.getItem(storageKey(day.id, exIndex, setIndex, 'weight'));
+            const doneSaved = localStorage.getItem(storageKey(day.id, exIndex, setIndex, 'done'));
+
+            if(repsSaved !== null) document.getElementById(repsId).value = repsSaved;
+            if(weightSaved !== null) document.getElementById(weightId).value = weightSaved;
+            if(doneSaved !== null) document.getElementById(doneId).checked = doneSaved === 'true';
+          });
+        });
+      });
+    }
+
+    function saveExercise(dayId, exIndex){
+      const day = days.find(d=>d.id===dayId);
+      const ex = day.exercises[exIndex];
+      ex.preset.forEach((_, setIndex)=>{
+        const reps = document.getElementById(`${dayId}_${exIndex}_${setIndex}_reps`).value;
+        const weight = document.getElementById(`${dayId}_${exIndex}_${setIndex}_weight`).value;
+        const done = document.getElementById(`${dayId}_${exIndex}_${setIndex}_done`).checked;
+
+        localStorage.setItem(storageKey(dayId, exIndex, setIndex, 'reps'), reps);
+        localStorage.setItem(storageKey(dayId, exIndex, setIndex, 'weight'), weight);
+        localStorage.setItem(storageKey(dayId, exIndex, setIndex, 'done'), done);
+      });
+      alert('Guardado en este navegador.');
+    }
+
+    function clearExercise(dayId, exIndex, totalSets){
+      for(let setIndex=0; setIndex<totalSets; setIndex++){
+        localStorage.removeItem(storageKey(dayId, exIndex, setIndex, 'reps'));
+        localStorage.removeItem(storageKey(dayId, exIndex, setIndex, 'weight'));
+        localStorage.removeItem(storageKey(dayId, exIndex, setIndex, 'done'));
+
+        const repsInput = document.getElementById(`${dayId}_${exIndex}_${setIndex}_reps`);
+        const weightInput = document.getElementById(`${dayId}_${exIndex}_${setIndex}_weight`);
+        const doneInput = document.getElementById(`${dayId}_${exIndex}_${setIndex}_done`);
+
+        const preset = days.find(d=>d.id===dayId).exercises[exIndex].preset[setIndex];
+        repsInput.value = preset;
+        weightInput.value = '';
+        doneInput.checked = false;
+      }
+    }
+
     renderTabs();
     renderPanels();
-    setupTabs();
+    bindTabs();
+    hydrateSavedValues();
   </script>
 </body>
 </html>
