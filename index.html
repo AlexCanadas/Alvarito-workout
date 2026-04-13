@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Álvaro Workout - Cutting Phase</title>
+    <title>Alvarito Workout - Cutting Phase</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -907,7 +907,7 @@
 <body>
     <header class="header">
         <div class="header-content">
-            <div class="logo">Álvaro Workout</div>
+            <div class="logo">Alvarito Workout</div>
             <div class="header-buttons">
                 <button class="phase-badge" onclick="toggleEditMode()" id="editToggle">Edit Mode</button>
                 <button class="phase-badge" onclick="exportToExcel()">📊 Export</button>
@@ -1310,111 +1310,6 @@
         };
 
 
-        // Datos de nutrición ajustados manualmente por Álvaro
-// Objetivo: ~1800-1900 kcal (déficit más agresivo pero sostenible)
-// Distribución: 30%P / 35%C / 35%G aprox
-const nutritionData = {
-    desayuno: {
-        title: "Desayuno",
-        kcal: 450,
-        protein: 35,
-        carbs: 45,
-        fat: 15,
-        options: [
-            {name: "Tortilla de 2 huevos + 1 rebanada pan integral", details: "2 huevos (120g) + 30g pan integral + 5g aceite oliva", kcal: 420, protein: 18, carbs: 18, fat: 24},
-            {name: "Yogur griego 0% + avena + frutos secos", details: "Yogur 150g + avena 40g + almendras 15g", kcal: 440, protein: 18, carbs: 42, fat: 18},
-            {name: "Batido proteico + plátano", details: "Whey 25g + plátano 100g + leche 250ml + PB 10g", kcal: 460, protein: 32, carbs: 48, fat: 14},
-            {name: "Queso fresco 0% + tostada + pavo", details: "Queso 150g + pan 30g + pavo 80g", kcal: 430, protein: 38, carbs: 22, fat: 12}
-        ]
-    },
-    comida: {
-        title: "Comida Principal",
-        kcal: 550,
-        protein: 45,
-        carbs: 55,
-        fat: 18,
-        options: [
-            {name: "Pechuga de pollo + arroz integral + verduras", details: "Pollo 150g + arroz seco 50g (crudo) + aceite 8g + verduras", kcal: 560, protein: 38, carbs: 52, fat: 16},
-            {name: "Pavo a la plancha + patata + ensalada", details: "Pavo 150g + patata 200g + aceite 8g", kcal: 540, protein: 35, carbs: 58, fat: 14},
-            {name: "Atún en lata + garbanzos + tomate", details: "Atún 120g + garbanzos secos 50g (crudos) + aceite 8g", kcal: 530, protein: 36, carbs: 48, fat: 16},
-            {name: "Pasta integral + pollo + tomate", details: "Pasta 60g (seca) + pollo 130g + tomate + aceite 8g", kcal: 570, protein: 34, carbs: 62, fat: 14}
-        ]
-    },
-    pre: {
-        title: "Pre-Entreno",
-        kcal: 200,
-        protein: 15,
-        carbs: 25,
-        fat: 5,
-        options: [
-            {name: "Plátano + yogur natural", details: "Plátano mediano + yogur 125g", kcal: 190, protein: 5, carbs: 32, fat: 3},
-            {name: "Tostada integral + miel", details: "Pan integral 30g + miel 10g", kcal: 210, protein: 3, carbs: 38, fat: 2},
-            {name: "Batido ligero", details: "Whey 20g + agua + plátano 80g", kcal: 180, protein: 18, carbs: 20, fat: 1},
-            {name: "Rebanada pan + queso fresco", details: "Pan integral 30g + queso 80g", kcal: 200, protein: 12, carbs: 18, fat: 8}
-        ]
-    },
-    cena: {
-        title: "Cena",
-        kcal: 400,
-        protein: 35,
-        carbs: 30,
-        fat: 15,
-        options: [
-            {name: "Pescado blanco + verduras", details: "Merluza 180g + verduras 200g + aceite 8g + patata 100g", kcal: 410, protein: 32, carbs: 28, fat: 14},
-            {name: "Tortilla francesa + ensalada", details: "2 huevos + claras 100g + aceite 8g + ensalada", kcal: 390, protein: 22, carbs: 8, fat: 26},
-            {name: "Pavo + calabacín + queso", details: "Pavo 130g + calabacín 200g + queso 80g + aceite 5g", kcal: 420, protein: 38, carbs: 12, fat: 22},
-            {name: "Atún + tomate + aguacate", details: "Atún 120g + tomate 200g + aguacate 60g (1/2 unidad pequeña)", kcal: 380, protein: 28, carbs: 18, fat: 20}
-        ]
-    },
-    // Nueva sección: Alimentos Base Recomendados (sin kcal específicas, son building blocks)
-    baseFoods: {
-        title: "Alimentos Base Recomendados",
-        isInfoCard: true, // Flag para renderizar diferente
-        categories: [
-            {
-                category: "Proteínas Magras",
-                items: [
-                    {name: "Pechuga de pollo", serving: "150-180g por comida", tip: "A la plancha, al horno o en airfryer"},
-                    {name: "Pavo (filete o pechuga)", serving: "150-180g por comida", tip: "Muy versátil, se cocina rápido"},
-                    {name: "Claras de huevo / Huevos enteros", serving: "2-3 enteros + claras si quieres más volumen", tip: "Cocinar con poco aceite o en sartén antiadherente"},
-                    {name: "Atún en lata (al natural)", serving: "120-150g escurrido", tip: "Conserva fácil para llevar al trabajo"},
-                    {name: "Pescado blanco (merluza, lenguado)", serving: "180-200g", tip: "Muy saciante y bajo en calorías"},
-                    {name: "Cottage cheese / Queso fresco 0%", serving: "150-200g", tip: "Ideal para meriendas o cenas rápidas"}
-                ]
-            },
-            {
-                category: "Carbohidratos Complejos",
-                items: [
-                    {name: "Arroz integral", serving: "50-60g en crudo (~150-180g cocido)", tip: "Hervir con caldo de pollo para más sabor"},
-                    {name: "Pasta integral", serving: "60-70g en seco", tip: "Cocer al dente, acompañar con tomate natural"},
-                    {name: "Patata", serving: "200-250g cocida o al horno", tip: "Mejor cocidas al vapor o al horno que fritas"},
-                    {name: "Boniato (batata)", serving: "200-250g", tip: "Al horno con especias son deliciosos"},
-                    {name: "Pan integral", serving: "30-40g por tostada (1 rebanada gruesa)", tip: "Elegir con alto contenido en fibra (>5g/100g)"},
-                    {name: "Avena en hojuelas", serving: "40-50g", tip: "Para desayunos o pre-entreno, con canela"}
-                ]
-            },
-            {
-                category: "Grasas Saludables",
-                items: [
-                    {name: "Aceite de oliva virgen extra", serving: "5-10g por comida (1-2 cucharadas)", tip: "No calentar a temperaturas muy altas"},
-                    {name: "Aguacate", serving: "1/2 unidad pequeña (60-80g)", tip: "En ensaladas o tostadas, rico en potasio"},
-                    {name: "Frutos secos (almendras, nueces)", serving: "15-20g (un puñado pequeño)", tip: "Cuidado con las cantidades, son densos"},
-                    {name: "Mantequilla de cacahuete natural", serving: "10-15g (1 cucharada)", tip: "Sin azúcares añadidos, solo cacahuete y sal"}
-                ]
-            },
-            {
-                category: "Verduras Libres",
-                items: [
-                    {name: "Verduras de hoja verde", serving: "Ilimitado", tip: "Espinacas, rúcula, lechuga, acelgas"},
-                    {name: "Crucíferas", serving: "200-300g", tip: "Brócoli, coliflor, repollo, muy saciantes"},
-                    {name: "Calabacín / Pepino", serving: "200-300g", tip: "Ideal para volumen con pocas calorías"},
-                    {name: "Tomate / Pimiento", serving: "200g", tip: "Base para salsas y ensaladas"},
-                    {name: "Espárragos / Judías verdes", serving: "150-200g", tip: "Muy fibrosos, ralentizan digestión"}
-                ]
-            }
-        ]
-    }
-};
         function renderNutrition() {
     const container = document.getElementById('nutrition-grid');
     let html = '';
@@ -1496,6 +1391,68 @@ const nutritionData = {
         let savedData = JSON.parse(localStorage.getItem('alvaroGymData')) || {};
         let editMode = false;
         let addingToDay = null;
+
+
+// ========== DATOS DE NUTRICIÓN ==========
+const nutritionData = {
+    desayuno: {
+        title: "Desayuno",
+        kcal: 400,
+        protein: 30,
+        carbs: 40,
+        fat: 14,
+        options: [
+            {name: "Tortilla de 2 huevos + pan integral", details: "2 huevos (120g) + 30g pan integral + 5g aceite oliva", kcal: 380, protein: 16, carbs: 18, fat: 22},
+            {name: "Yogur griego 0% + avena + frutos secos", details: "Yogur 150g + avena 40g + almendras 15g", kcal: 410, protein: 18, carbs: 42, fat: 16},
+            {name: "Batido proteico + plátano", details: "Whey 25g + plátano 100g + leche 250ml + PB 10g", kcal: 420, protein: 32, carbs: 45, fat: 14},
+            {name: "Cottage cheese + tostada + pavo", details: "Queso 150g + pan 30g + pavo 80g", kcal: 390, protein: 36, carbs: 20, fat: 12}
+        ]
+    },
+    comida: {
+        title: "Comida Principal",
+        kcal: 550,
+        protein: 45,
+        carbs: 55,
+        fat: 16,
+        options: [
+            {name: "Pechuga de pollo + arroz integral", details: "Pollo 150g + arroz seco 50g + aceite 8g + verduras", kcal: 560, protein: 38, carbs: 52, fat: 14},
+            {name: "Pavo a la plancha + patata", details: "Pavo 150g + patata 200g + aceite 8g + ensalada", kcal: 540, protein: 35, carbs: 58, fat: 14},
+            {name: "Atún en lata + garbanzos", details: "Atún 120g + garbanzos secos 50g + aceite 8g + tomate", kcal: 530, protein: 36, carbs: 48, fat: 16},
+            {name: "Pasta integral + pollo", details: "Pasta 60g seca + pollo 130g + tomate + aceite 8g", kcal: 570, protein: 34, carbs: 62, fat: 14}
+        ]
+    },
+    pre: {
+        title: "Pre-Entreno",
+        kcal: 200,
+        protein: 15,
+        carbs: 25,
+        fat: 4,
+        options: [
+            {name: "Plátano + yogur natural", details: "Plátano mediano (120g) + yogur 125g", kcal: 190, protein: 5, carbs: 32, fat: 3},
+            {name: "Tostada integral + miel", details: "Pan integral 30g + miel 15g", kcal: 200, protein: 3, carbs: 38, fat: 2},
+            {name: "Batido ligero", details: "Whey 20g + agua + plátano 80g", kcal: 180, protein: 18, carbs: 20, fat: 1},
+            {name: "Pan + cottage cheese", details: "Pan integral 30g + queso 80g", kcal: 210, protein: 14, carbs: 18, fat: 8}
+        ]
+    },
+    cena: {
+        title: "Cena",
+        kcal: 400,
+        protein: 35,
+        carbs: 25,
+        fat: 15,
+        options: [
+            {name: "Merluza + verduras + patata", details: "Pescado 180g + verduras 200g + aceite 8g + patata 100g", kcal: 410, protein: 32, carbs: 28, fat: 14},
+            {name: "Tortilla francesa + ensalada", details: "2 huevos + claras 100g + aceite 8g + espinacas", kcal: 380, protein: 22, carbs: 6, fat: 24},
+            {name: "Pavo + calabacín + queso", details: "Pavo 130g + calabacín 200g + cottage 80g + aceite 5g", kcal: 420, protein: 38, carbs: 10, fat: 20},
+            {name: "Atún + tomate + aguacate", details: "Atún 120g + tomate 200g + aguacate 60g (1/2 pequeño)", kcal: 390, protein: 28, carbs: 16, fat: 22}
+        ]
+    }
+};
+
+// ========== FUNCIONES ==========
+
+function init() {
+    // ... resto de tu código
 
         // Initialize
         function init() {
